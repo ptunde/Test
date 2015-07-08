@@ -1,7 +1,6 @@
 package com.example.tundepeter.test.json;
 
 import android.util.JsonReader;
-import android.util.Log;
 
 import com.example.tundepeter.test.model.Person;
 
@@ -61,7 +60,6 @@ public class JSONParser {
             }
         }
         reader.endObject();
-        Log.d("Person: ", name + ", " + description + ", " + smallPic + ", " + largePic);
         return new Person(name, description, smallPic, largePic);
     }
 }

@@ -54,7 +54,7 @@ public class ListAdapter extends ArrayAdapter {
         viewHolder.name.setText(person.getName());
         viewHolder.description.setText(person.getDescription());
 
-        ImageLoaderProvider.getInstance(getContext()).getLoader().displayImage(Uri.parse(person.getSmallPictureUrl()).toString(), viewHolder.imageView);
+        ImageLoaderProvider.getInstance(getContext()).displayImage(Uri.parse(person.getSmallPictureUrl()).toString(), viewHolder.imageView);
 
         // Return the completed view to render on screen
         return convertView;

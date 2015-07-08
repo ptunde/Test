@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -19,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonListFragment extends ListFragment {
+public class PersonListFragment extends Fragment implements AdapterView.OnItemClickListener  {
     private static final String JSON_URL = "https://s3-us-west-2.amazonaws.com/wirestorm/assets/response.json";
     private OnPersonSelectedListener mListener;
     private ArrayAdapter adapter;
@@ -41,11 +44,13 @@ public class PersonListFragment extends ListFragment {
 
         ListView listView = (ListView) view.findViewById(R.id.listView);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
         new AsyncTask<Void, Void, List>() {
             @Override
             protected List doInBackground(Void... params) {
@@ -81,6 +86,11 @@ public class PersonListFragment extends ListFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mListener.onPersonSelected((Person) adapter.getItem(position));
     }
 
     /**

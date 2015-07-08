@@ -11,20 +11,20 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class ImageLoaderProvider {
     private static Context context;
-    private volatile static ImageLoaderProvider instance;
+    private volatile static ImageLoader loader;
     private static final Point DIMENSION = new Point(480, 800);
 
     /** Returns singleton class instance */
-    public static ImageLoaderProvider getInstance(Context myContext) {
-        if (instance == null) {
+    public static ImageLoader getInstance(Context myContext) {
+        if (loader == null) {
             synchronized (ImageLoaderProvider.class) {
                 context = myContext;
-                if (instance == null) {
-                    instance = new ImageLoaderProvider();
+                if (loader == null) {
+                    loader = new ImageLoaderProvider().getLoader();
                 }
             }
         }
-        return instance;
+        return loader;
     }
 
     public ImageLoader getLoader() {

@@ -2,11 +2,11 @@ package com.example.tundepeter.test;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
-
 import com.example.tundepeter.test.fragment.PersonListFragment;
 import com.example.tundepeter.test.model.Person;
+import com.example.tundepeter.test.utils.NavigationService;
 
 
 public class MainActivity extends ActionBarActivity implements PersonListFragment.OnPersonSelectedListener{
@@ -28,5 +28,6 @@ public class MainActivity extends ActionBarActivity implements PersonListFragmen
     @Override
     public void onPersonSelected(Person person) {
         // start second activity
+        new NavigationService().navigateToProfileActivity(this, person);
     }
 }
