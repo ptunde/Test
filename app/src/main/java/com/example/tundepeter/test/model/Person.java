@@ -6,11 +6,11 @@ public class Person {
     private String smallPictureUrl;
     private String largePictureUrl;
 
-    public Person(String name, String description, String smallPictureUrl, String largePictureUrl) {
-        this.name = name;
-        this.description = description;
-        this.smallPictureUrl = smallPictureUrl;
-        this.largePictureUrl = largePictureUrl;
+    public Person(String tempName, String tempDescription, String tempSmallPictureUrl, String tempLargePictureUrl) {
+        name = tempName;
+        description = tempDescription;
+        smallPictureUrl = tempSmallPictureUrl;
+        largePictureUrl = tempLargePictureUrl;
     }
 
     public String getName() {

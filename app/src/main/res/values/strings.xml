@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">Test</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_profile">ProfileActivity</string>
+    <!-- Activity names -->
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_main">List</string>
+
+    <!-- Wornings -->
+    <string name="no_network_connection">There is no network connection.\nPlease connect to the internet.</string>
+    <string name="json_not_parsed">Some error occurred.\nPlease restart the application.</string>
 </resources>

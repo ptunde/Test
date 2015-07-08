@@ -18,6 +18,9 @@ public class JSONParser {
     private final static String JSON_LARGE_PIC = "lrgpic";
 
     public List getJsonList(InputStream inputStream) throws IOException {
+        if (inputStream == null) {
+            return null;
+        }
         JsonReader reader = new JsonReader(new InputStreamReader(inputStream, ENCODING));
         try {
             return readMessagesArray(reader);

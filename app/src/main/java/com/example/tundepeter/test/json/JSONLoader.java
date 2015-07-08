@@ -30,7 +30,8 @@ public class JSONLoader {
                 inputStream = connection.getInputStream();
                 break;
             default:
-                // some error occured
+                // check the response code to identify
+                // client or server errors
                 break;
         }
 

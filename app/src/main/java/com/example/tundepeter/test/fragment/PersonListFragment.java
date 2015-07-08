@@ -1,22 +1,23 @@
 package com.example.tundepeter.test.fragment;
 
 import android.app.Activity;
-import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.tundepeter.test.R;
 import com.example.tundepeter.test.adapter.ListAdapter;
 import com.example.tundepeter.test.json.JSONLoader;
 import com.example.tundepeter.test.model.Person;
+import com.example.tundepeter.test.utils.ConnectivityService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,24 +52,12 @@ public class PersonListFragment extends Fragment implements AdapterView.OnItemCl
     public void onResume() {
         super.onResume();
 
-        new AsyncTask<Void, Void, List>() {
-            @Override
-            protected List doInBackground(Void... params) {
-                JSONLoader jsonLoader = new JSONLoader();
-                List list = null;
-                try {
-                    list = jsonLoader.getJsonFromUrl(JSON_URL);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return list;
-            }
-
-            @Override
-            protected void onPostExecute(List list) {
-                adapter.addAll(list);
-            }
-        }.execute();
+        if (ConnectivityService.isNetworkConnection(getActivity())) {
+            new LoaderAsynctask().execute();
+        } else {
+            // show toast if no network connection
+            Toast.makeText(getActivity(), getResources().getText(R.string.no_network_connection), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -101,5 +90,37 @@ public class PersonListFragment extends Fragment implements AdapterView.OnItemCl
      */
     public interface OnPersonSelectedListener {
         public void onPersonSelected(Person person);
+    }
+
+    private class LoaderAsynctask extends AsyncTask<Void, Void, List> {
+
+        @Override
+        protected void onPreExecute() {
+            adapter.clear();
+            ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected List doInBackground(Void... params) {
+            JSONLoader jsonLoader = new JSONLoader();
+            List list = null;
+            try {
+                list = jsonLoader.getJsonFromUrl(JSON_URL);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(List list) {
+            if (list == null) {
+                Toast.makeText(getActivity(), getResources().getText(R.string.json_not_parsed), Toast.LENGTH_LONG).show();
+                return;
+            }
+            adapter.addAll(list);
+            getActivity().findViewById(R.id.progressBar).setVisibility(View.GONE);
+        }
     }
 }

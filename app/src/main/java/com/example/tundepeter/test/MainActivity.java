@@ -2,7 +2,6 @@ package com.example.tundepeter.test;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import com.example.tundepeter.test.fragment.PersonListFragment;
 import com.example.tundepeter.test.model.Person;
@@ -28,6 +27,6 @@ public class MainActivity extends ActionBarActivity implements PersonListFragmen
     @Override
     public void onPersonSelected(Person person) {
         // start second activity
-        new NavigationService().navigateToProfileActivity(this, person);
+        NavigationService.navigateToProfileActivity(this, person);
     }
 }
